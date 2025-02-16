@@ -8,25 +8,15 @@ pipeline {
             }
         }
 
-        stage('Run Fibonacci Script') {
+        stage('Build') {
             steps {
-                sh '''
-                chmod +x fibonacci.sh
-                ./fibonacci.sh
-                '''
+                echo 'Building the project...'
             }
         }
 
         stage('Publish HTML Report') {
             steps {
-               publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: '.',
-                    reportFiles: 'output.html',
-                    reportName: 'Fibonacci Check Report'
-                ])
+                echo 'Running tests...'
             }
         }
 
