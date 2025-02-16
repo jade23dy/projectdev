@@ -4,19 +4,29 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/USERNAME/REPO.git'
+                git branch: 'dev', url: 'https://github.com/jade23dy/projectdev.git'
             }
         }
 
-        stage('Build') {
+        stage('Run Fibonacci Script') {
             steps {
-                echo 'Building the project...'
+                sh '''
+                chmod +x fibonacci.sh
+                ./fibonacci.sh
+                '''
             }
         }
 
-        stage('Test') {
+        stage('Publish HTML Report') {
             steps {
-                echo 'Running tests...'
+               publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: '.',
+                    reportFiles: 'output.html',
+                    reportName: 'Fibonacci Check Report'
+                ])
             }
         }
 
